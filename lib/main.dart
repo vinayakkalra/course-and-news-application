@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'screens/home/home.dart';
-// import 'screens/home/homeV1.dart';
-import 'screens/events/events.dart';
+// import 'screens/home/home.dart';
+import 'screens/home/home_v1.dart';
+import 'screens/events/events_v1.dart';
 import 'screens/profile/profile.dart';
 import 'screens/live_QA/liveQA.dart';
 import 'screens/settings/settings.dart';
@@ -38,10 +38,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreenWidget(),
     EventsScreenWidget(),
-    // Text(
-    //   'Index 1: Courses',
-    //   style: optionStyle,
-    // ),
     ProfileScreenWidget(),
     LiveQAScreenWidget(),
     SettingScreenWidget(),
@@ -56,7 +52,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(        
+      appBar: AppBar(  
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () => {}//Navigator.pushNamed(context, '/checkout'),
+          )
+        ],      
         title: Row(
           children: [
             Image.asset(
@@ -64,14 +66,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               height: 115,
               fit: BoxFit.cover
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(200, 0, 0, 0),
-                child: Icon(
-                  Icons.shopping_cart,
-                  color: Colors.black,
-                  size: 25,
-                  ),
-              )
+              // Padding(
+              //   padding: EdgeInsets.fromLTRB(200, 0, 0, 0),
+              //   child: Icon(
+              //     Icons.shopping_cart,
+              //     color: Colors.black,
+              //     size: 25,
+              //     ),
+              // )
             
         ],)
         
@@ -82,7 +84,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       // Container(
         // child: _widgetOptions.elementAt(_selectedIndex),
       // ),
-      bottomNavigationBar:new Theme(
+      bottomNavigationBar:
+      new Theme(
         data: Theme.of(context).copyWith(
             // sets the background color of the `BottomNavigationBar`
             canvasColor: Colors.grey[850],
@@ -92,7 +95,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 .of(context)
                 .textTheme
                 .copyWith(caption: new TextStyle(color: Colors.white))), // sets the inactive color of the `BottomNavigationBar`
-        child: new BottomNavigationBar(
+        child: 
+          new BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: [
               BottomNavigationBarItem(

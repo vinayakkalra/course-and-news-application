@@ -23,7 +23,7 @@ class HomeScreenWidget extends StatelessWidget {
                         leading: Icon(Icons.portrait),
                         title: Text('Hi Nishant'),
                         subtitle: Text('Learn About Cryptocurrency and Stock Markets'),
-                        ),                
+                        ),          
                       ],
                     ),
                   ),
