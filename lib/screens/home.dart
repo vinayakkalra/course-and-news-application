@@ -1,6 +1,8 @@
+import 'package:course_and_news/store/my_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 
+import 'package:course_and_news/screens/ProductDetailScreen.dart';
 void main() => runApp(HomeScreenWidget());
 
 class HomeScreenWidget extends StatelessWidget {
@@ -8,6 +10,8 @@ class HomeScreenWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var store = Provider.of<MyStore>(context);
+
     // final _screenSize = MediaQuery.of(context).size;
     return CustomScrollView(
       slivers: <Widget>[
@@ -65,21 +69,39 @@ class HomeScreenWidget extends StatelessWidget {
         SliverGrid(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              return Container(
-                  padding: EdgeInsets.all(20.0),
-                  height: index.isEven ? 200 : 240,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.0),
-                      color: Colors.blueAccent,
-                      image: DecorationImage(
-                          image: AssetImage('assets/logo/finstreet_logo.png'),
-                          fit: BoxFit.fill)),
-                  child: Column(children: [
-                    Text("Event ${index + 1}"),
-                    Text("No of Sections ${(index + 1) * 5}"),
-                  ]));
+              return InkWell(
+                onTap: () {
+                  // set activeProduct to the tapped one in store file
+                  store.setAtiveProduct(store.products[index]);
+                  // go to th detail screen
+                  Navigator.push(
+                    context,
+                    // MaterialPageRoute(builder: (context) => ProductDetailScreen()),
+                    MaterialPageRoute(builder: (context) { 
+                      // print("Context while tap ${context}");
+                      return ProductDetailScreen();
+                      }),
+                    );
+                },
+                child: Container(
+                    padding: EdgeInsets.all(20.0),
+                    height: index.isEven ? 200 : 240,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.0),
+                        color: Colors.blueAccent,
+                        image: DecorationImage(
+                            // image: AssetImage('assets/logo/finstreet_logo.png'),
+                            image:
+                                NetworkImage("${store.products[index].image}"),
+                            fit: BoxFit.fill)),
+                    child: Column(children: [
+                      Text("${store.products[index].name}"),
+                      Text("${store.products[index].price}"),
+                      Text("${store.products[index].id}"),
+                    ])),
+              );
             },
-            childCount: 4,
+            childCount: store.products.length,
           ),
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 200.0,
@@ -107,9 +129,7 @@ class HomeScreenWidget extends StatelessWidget {
                     child: Column(children: [
                       Text("Event ${index + 1}"),
                       Text("No of Sections ${(index + 1) * 5}"),
-                    ]
-                    )
-                    ),
+                    ])),
               );
             },
             childCount: 4,
