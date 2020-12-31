@@ -1,6 +1,6 @@
-# course_and_news
+# Course and news app based on model similar to Udemy
 
-A new Flutter project.
+A Flutter Based project.
 
 ## Getting Started
 
